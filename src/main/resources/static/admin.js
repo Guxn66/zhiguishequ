@@ -79,21 +79,27 @@ async function showPage(page) {
 async function renderDashboard() {
     let stats = { banners: 0, cases: 0, counselors: 0, projects: 0, activities: 0, courses: 0 };
     try {
-        const [banners, cases, counselors, projects, activities, courses] = await Promise.all([
-            fetch(`${API}/banners`).then(r => r.json()).catch(() => []),
-            fetch(`${API}/cases`).then(r => r.json()).catch(() => ({ total: 0 })),
-            fetch(`${API}/counselors`).then(r => r.json()).catch(() => []),
-            fetch(`${API}/projects`).then(r => r.json()).catch(() => ({ total: 0 })),
-            fetch(`${API}/volunteers/activities`).then(r => r.json()).catch(() => []),
-            fetch(`${API}/training/courses`).then(r => r.json()).catch(() => [])
+        const [bannersRes, casesRes, counselorsRes, projectsRes, activitiesRes, coursesRes] = await Promise.all([
+            fetch(`${API}/banners`).then(r => r.json()).catch(() => ({})),
+            fetch(`${API}/cases`).then(r => r.json()).catch(() => ({})),
+            fetch(`${API}/counselors`).then(r => r.json()).catch(() => ({})),
+            fetch(`${API}/projects`).then(r => r.json()).catch(() => ({})),
+            fetch(`${API}/volunteers/activities`).then(r => r.json()).catch(() => ({})),
+            fetch(`${API}/training/courses`).then(r => r.json()).catch(() => ({}))
         ]);
+        const banners = bannersRes.data || bannersRes || [];
+        const cases = casesRes.data || casesRes || [];
+        const counselors = counselorsRes.data || counselorsRes || [];
+        const projects = projectsRes.data || projectsRes || [];
+        const activities = activitiesRes.data || activitiesRes || [];
+        const courses = coursesRes.data || coursesRes || [];
         stats = {
-            banners: banners.length || 0,
-            cases: cases.total || 0,
-            counselors: counselors.length || 0,
-            projects: projects.total || 0,
-            activities: activities.length || 0,
-            courses: courses.length || 0
+            banners: Array.isArray(banners) ? banners.length : 0,
+            cases: Array.isArray(cases) ? cases.length : 0,
+            counselors: Array.isArray(counselors) ? counselors.length : 0,
+            projects: Array.isArray(projects) ? projects.length : 0,
+            activities: Array.isArray(activities) ? activities.length : 0,
+            courses: Array.isArray(courses) ? courses.length : 0
         };
     } catch (e) { console.error(e); }
 
@@ -129,7 +135,8 @@ async function renderDashboard() {
 async function renderBanners() {
     let rows = '';
     try {
-        const data = await fetch(`${API}/banners`).then(r => r.json());
+        const res = await fetch(`${API}/banners`).then(r => r.json());
+        const data = res.data || res || [];
         if (data.length === 0) {
             rows = '<tr><td colspan="6" class="empty">暂无数据，点击上方按钮添加</td></tr>';
         } else {
@@ -172,7 +179,8 @@ function addBanner() {
 
 async function editBanner(id) {
     try {
-        const data = await fetch(`${API}/banners`).then(r => r.json());
+        const res = await fetch(`${API}/banners`).then(r => r.json());
+        const data = res.data || res || [];
         const item = data.find(b => b.id === id);
         if (!item) return showToast('数据不存在', 'error');
         editingItem = item;
@@ -216,7 +224,8 @@ async function deleteBanner(id) {
 async function renderCounselors() {
     let rows = '';
     try {
-        const data = await fetch(`${API}/counselors`).then(r => r.json());
+        const res = await fetch(`${API}/counselors`).then(r => r.json());
+        const data = res.data || res || [];
         if (data.length === 0) {
             rows = '<tr><td colspan="6" class="empty">暂无数据</td></tr>';
         } else {
@@ -260,7 +269,8 @@ function addCounselor() {
 
 async function editCounselor(id) {
     try {
-        const data = await fetch(`${API}/counselors`).then(r => r.json());
+        const res = await fetch(`${API}/counselors`).then(r => r.json());
+        const data = res.data || res || [];
         const item = data.find(c => c.id === id);
         if (!item) return showToast('数据不存在', 'error');
         editingItem = item;
@@ -515,7 +525,8 @@ async function deleteProject(id) {
 async function renderVolunteer() {
     let rows = '';
     try {
-        const data = await fetch(`${API}/volunteers/activities`).then(r => r.json());
+        const res = await fetch(`${API}/volunteers/activities`).then(r => r.json());
+        const data = res.data || res || [];
         if (data.length === 0) {
             rows = '<tr><td colspan="7" class="empty">暂无数据</td></tr>';
         } else {
@@ -566,7 +577,8 @@ function addVolunteer() {
 
 async function editVolunteer(id) {
     try {
-        const data = await fetch(`${API}/volunteers/activities`).then(r => r.json());
+        const res = await fetch(`${API}/volunteers/activities`).then(r => r.json());
+        const data = res.data || res || [];
         const item = data.find(v => v.id === id);
         if (!item) return showToast('数据不存在', 'error');
         editingItem = item;
@@ -618,7 +630,8 @@ async function deleteVolunteer(id) {
 async function renderTraining() {
     let rows = '';
     try {
-        const data = await fetch(`${API}/training/courses`).then(r => r.json());
+        const res = await fetch(`${API}/training/courses`).then(r => r.json());
+        const data = res.data || res || [];
         if (data.length === 0) {
             rows = '<tr><td colspan="6" class="empty">暂无数据</td></tr>';
         } else {
@@ -662,7 +675,8 @@ function addTraining() {
 
 async function editTraining(id) {
     try {
-        const data = await fetch(`${API}/training/courses`).then(r => r.json());
+        const res = await fetch(`${API}/training/courses`).then(r => r.json());
+        const data = res.data || res || [];
         const item = data.find(t => t.id === id);
         if (!item) return showToast('数据不存在', 'error');
         editingItem = item;
@@ -709,7 +723,8 @@ async function deleteTraining(id) {
 async function renderCare() {
     let rows = '';
     try {
-        const data = await fetch(`${API}/care/services`).then(r => r.json());
+        const res = await fetch(`${API}/care/services`).then(r => r.json());
+        const data = res.data || res || [];
         if (!data || data.length === 0) {
             rows = '<tr><td colspan="6" class="empty">暂无数据</td></tr>';
         } else {
@@ -761,7 +776,8 @@ function addCare() {
 
 async function editCare(id) {
     try {
-        const data = await fetch(`${API}/care/services`).then(r => r.json());
+        const res = await fetch(`${API}/care/services`).then(r => r.json());
+        const data = res.data || res || [];
         const item = data.find(c => c.id === id);
         if (!item) return showToast('数据不存在', 'error');
         editingItem = item;
@@ -813,7 +829,8 @@ async function deleteCare(id) {
 async function renderAppointments() {
     let rows = '';
     try {
-        const data = await fetch(`${API}/appointments`).then(r => r.json());
+        const res = await fetch(`${API}/appointments`).then(r => r.json());
+        const data = res.data || res || [];
         if (!data || data.length === 0) {
             rows = '<tr><td colspan="7" class="empty">暂无预约记录</td></tr>';
         } else {
@@ -866,7 +883,8 @@ async function updateAppointmentStatus(id, status) {
 async function renderFeedback() {
     let rows = '';
     try {
-        const data = await fetch(`${API}/feedback`).then(r => r.json());
+        const res = await fetch(`${API}/feedback`).then(r => r.json());
+        const data = res.data || res || [];
         if (!data || data.length === 0) {
             rows = '<tr><td colspan="6" class="empty">暂无反馈记录</td></tr>';
         } else {
