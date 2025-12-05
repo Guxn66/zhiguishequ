@@ -17,8 +17,8 @@ public class HealthController {
         return result;
     }
 
-    @GetMapping("/")
-    public Map<String, Object> index() {
+    @GetMapping("/api/info")
+    public Map<String, Object> info() {
         Map<String, Object> result = new HashMap<>();
         result.put("name", "智汇社区后端API");
         result.put("version", "1.0.0");
