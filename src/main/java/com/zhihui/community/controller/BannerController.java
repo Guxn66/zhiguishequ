@@ -10,8 +10,32 @@ public class BannerController {
     private static final List<Map<String, Object>> banners = new ArrayList<>();
 
     static {
-        banners.add(Map.of("id", 1, "title", "欢迎使用智汇社区", "imageUrl", "", "link", "", "sort", 1));
-        banners.add(Map.of("id", 2, "title", "社区服务活动", "imageUrl", "", "link", "", "sort", 2));
+        Map<String, Object> b1 = new HashMap<>();
+        b1.put("id", 1);
+        b1.put("title", "欢迎使用智汇社区");
+        b1.put("imageUrl", "https://picsum.photos/750/400?random=1");
+        b1.put("link", "/pages/index/index");
+        b1.put("sortOrder", 1);
+        b1.put("status", 1);
+        banners.add(b1);
+
+        Map<String, Object> b2 = new HashMap<>();
+        b2.put("id", 2);
+        b2.put("title", "两岸融合·共建家园");
+        b2.put("imageUrl", "https://picsum.photos/750/400?random=2");
+        b2.put("link", "/pages/integration/activities/index");
+        b2.put("sortOrder", 2);
+        b2.put("status", 1);
+        banners.add(b2);
+
+        Map<String, Object> b3 = new HashMap<>();
+        b3.put("id", 3);
+        b3.put("title", "心理咨询服务开放预约");
+        b3.put("imageUrl", "https://picsum.photos/750/400?random=3");
+        b3.put("link", "/pages/counseling/index");
+        b3.put("sortOrder", 3);
+        b3.put("status", 1);
+        banners.add(b3);
     }
 
     @GetMapping

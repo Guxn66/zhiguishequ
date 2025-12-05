@@ -10,10 +10,53 @@ public class VolunteerController {
     private static final List<Map<String, Object>> activities = new ArrayList<>();
 
     static {
-        activities.add(Map.of("id", 1, "title", "社区环保活动", "date", "2024-02-10",
-            "location", "社区公园", "points", 10, "maxVolunteers", 20, "currentVolunteers", 8));
-        activities.add(Map.of("id", 2, "title", "关爱老人探访", "date", "2024-02-15",
-            "location", "养老院", "points", 15, "maxVolunteers", 10, "currentVolunteers", 5));
+        Map<String, Object> v1 = new HashMap<>();
+        v1.put("id", 1);
+        v1.put("title", "社区环保清洁行动");
+        v1.put("date", "2024-12-15");
+        v1.put("location", "智汇社区公园");
+        v1.put("points", 10);
+        v1.put("maxVolunteers", 30);
+        v1.put("currentVolunteers", 18);
+        v1.put("description", "参与社区公共区域清洁，美化我们的家园");
+        v1.put("status", "ongoing");
+        activities.add(v1);
+
+        Map<String, Object> v2 = new HashMap<>();
+        v2.put("id", 2);
+        v2.put("title", "关爱老人爱心探访");
+        v2.put("date", "2024-12-20");
+        v2.put("location", "社区养老服务中心");
+        v2.put("points", 15);
+        v2.put("maxVolunteers", 15);
+        v2.put("currentVolunteers", 12);
+        v2.put("description", "探访社区独居老人，陪伴聊天，帮助做家务");
+        v2.put("status", "ongoing");
+        activities.add(v2);
+
+        Map<String, Object> v3 = new HashMap<>();
+        v3.put("id", 3);
+        v3.put("title", "儿童课后辅导班");
+        v3.put("date", "2024-12-18");
+        v3.put("location", "社区儿童活动中心");
+        v3.put("points", 12);
+        v3.put("maxVolunteers", 10);
+        v3.put("currentVolunteers", 8);
+        v3.put("description", "为社区儿童提供课后作业辅导和兴趣培养");
+        v3.put("status", "ongoing");
+        activities.add(v3);
+
+        Map<String, Object> v4 = new HashMap<>();
+        v4.put("id", 4);
+        v4.put("title", "两岸美食文化节志愿者");
+        v4.put("date", "2024-12-25");
+        v4.put("location", "社区文化广场");
+        v4.put("points", 20);
+        v4.put("maxVolunteers", 25);
+        v4.put("currentVolunteers", 15);
+        v4.put("description", "协助两岸美食文化节活动的组织与服务工作");
+        v4.put("status", "ongoing");
+        activities.add(v4);
     }
 
     @GetMapping("/activities")
