@@ -1,0 +1,38 @@
+server:
+  port: 3000
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/zhihui_community?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&characterEncoding=utf8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+
+# JWT配置
+jwt:
+  secret: zhihui-community-secret-key-2024-very-long-secret-key-for-jwt-token
+  expiration: 604800000  # 7天 (毫秒)
+
+# Gemini AI配置
+gemini:
+  api-key: AIzaSyAcG-EgjKjgcfonPagaUWDmjVPrwCvhwv0
+
+# 日志配置
+logging:
+  level:
+    com.zhihui.community: DEBUG
+    org.springframework.security: DEBUG
+
